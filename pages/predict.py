@@ -16,7 +16,7 @@ import tensorflow as tf
 import tf_keras as keras
 from tf_keras.models import load_model
 try:
-    df = pd.read_pickle('Copy of df_clean.pkl')
+    df = pd.read_csv('df_clean.csv')
 except FileNotFoundError:
     st.error("Data file 'Copy of df_clean.pkl' not found in root directory.")
 
