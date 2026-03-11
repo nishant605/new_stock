@@ -1,11 +1,20 @@
+import os
 import pandas as pd
 import streamlit as st
 import pickle
 import plotly.express as px
 from tensorflow.keras.models import load_model
 import numpy as np
+import tensorflow as tf
+import sys
 
-df = pd.read_pickle(r'C:\Users\ADMIN\Downloads\Stock Prediction\Copy of df_clean.pkl')
+os.environ['TF_USE_LEGACY_KERAS'] = '1'
+sys.modules['numpy._core'] = np
+
+try:
+    df = pd.read_pickle('Copy of df_clean.pkl')
+except FileNotFoundError:
+    st.error("Data file 'Copy of df_clean.pkl' not found in root directory.")
 
 excluded_name = {
     'HINDALC0',    # Old symbol for HINDALCO
@@ -93,7 +102,10 @@ if st.session_state.predict_clicked:
 
     st.subheader('Predicted Next-Day Close Price')
 
-    model = load_model(f'models/gru_model_{selected_stock}.keras')
+    tf.keras.backend.clear_session()
+    model_path = f'models/gru_model_{selected_stock}.keras'
+    model = load_model(model_path, compile=False)
+    #model = load_model(f'models/gru_model_{selected_stock}.keras')
 
     scaler_x = pickle.load(open(f'models/scaler_X_{selected_stock}.pkl', 'rb'))
     scaler_y = pickle.load(open(f'models/scaler_y_{selected_stock}.pkl', 'rb'))
@@ -154,7 +166,6 @@ if st.session_state.predict_clicked:
     st.divider()
 
     st.subheader('Multiple Day Predictions')
-
     recent_data = data.copy()
     days = st.slider('Select number of days to predict',1,7,1)
 
