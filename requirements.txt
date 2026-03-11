@@ -5,3 +5,4 @@ scikit-learn
 matplotlib
 yfinance
 tensorflow-cpu==2.15.0
+plotly
