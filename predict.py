@@ -1,15 +1,19 @@
 import os
+# This MUST be the first line of code in the file
+os.environ['TF_USE_LEGACY_KERAS'] = '1'
+
+import sys
+import numpy as np
+# Fix for NumPy 2.0/Pickle mismatch
+sys.modules['numpy._core'] = np
+
 import pandas as pd
 import streamlit as st
 import pickle
 import plotly.express as px
-from tensorflow.keras.models import load_model
-import numpy as np
 import tensorflow as tf
-import sys
 
-os.environ['TF_USE_LEGACY_KERAS'] = '1'
-sys.modules['numpy._core'] = np
+from tensorflow.keras.models import load_model
 
 try:
     df = pd.read_pickle('Copy of df_clean.pkl')
