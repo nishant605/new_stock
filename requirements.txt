@@ -5,5 +5,5 @@ scikit-learn==1.2.2
 matplotlib
 plotly
 yfinance
-tensorflow==2.15.0
-keras==2.15.0
+tensorflow==2.16.1
+tf-keras==2.16.0
